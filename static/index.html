@@ -1,5 +1,52 @@
-<html>
-<body>
-  <b> serving static site!!
-</body>
-</html>
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Albers Projection</title>
+<style>
+
+path {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-linejoin: round;
+}
+
+</style>
+<svg width="960" height="500"></svg>
+  <button onclick="plotLocations()">Click here to make the dots show!</button>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script>
+
+d3.json("http://bl.ocks.org/mbostock/raw/4090846/us.json", function(error, us) {
+  if (error) throw error;
+
+  projection = d3.geo.albers()
+
+  d3.select("svg").append("path")
+      .datum(topojson.feature(us, us.objects.states))
+      .attr("d", d3.geo.path().projection(projection));
+
+      aa = [-74.5005, 40.6342];
+      bb = [-122.389809, 37.72728];
+      cc = [-100.389809, 37.72728];
+
+
+      // d3.select("svg").selectAll("circle")
+      //   .data([aa,bb]).enter()
+      //   .append("circle")
+      //   .attr("cx", function (d) { console.log(projection(d)); return projection(d)[0]; })
+      //   .attr("cy", function (d) { return projection(d)[1]; })
+      //   .attr("r", "1px")
+      //   .attr("fill", "red")
+
+});
+plotLocations = function() {
+  d3.select("svg").selectAll("circle")
+    .data([aa,bb, cc]).enter()
+    .append("circle")
+    .attr("cx", function(d){console.log(projection(d)); return projection(d)[0]; })
+    .attr("cy", function(d){ return projection(d)[1]; })
+    .attr("r","3px")
+    .attr("fill","red")
+};
+
+</script>
