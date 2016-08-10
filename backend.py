@@ -7,3 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return send_from_directory('static','index.html')
+
+@app.route('/us.json')
+def usJson():
+    return send_from_directory('static','us.json')
